@@ -1,0 +1,12 @@
+{
+  "bot": {
+    "host": "localhost",
+    "port": 25565,
+    "username": "bot",
+    "version": "1.21.11"
+  },
+  "base_reconnect_timeout": "5000",
+  "max_reconnect_attempts": "5",
+  "prompt": "> ",
+  "command_prefix": ":"
+}
