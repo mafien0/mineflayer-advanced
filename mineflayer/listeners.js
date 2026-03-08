@@ -1,5 +1,6 @@
 import { updateBotStatus } from "../interface/status.js";
 import { parseChat } from "../interface/chat.js";
+import { scheldueReconnect } from "./bot.js";
 
 export function attachListeners(bot) {
 	let statusInterval;
@@ -10,6 +11,7 @@ export function attachListeners(bot) {
 
 	bot.once("end", () => {
 		clearInterval(statusInterval);
+		scheldueReconnect();
 	});
 
 	bot.on("message", (jsonMsg) => {
