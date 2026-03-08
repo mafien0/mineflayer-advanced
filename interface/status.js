@@ -11,12 +11,15 @@ const status = {
 };
 
 function sendStatus() {
-	// Apply all non-null values
 	const data = {};
 	for (const [key, value] of Object.entries(status)) {
 		if (value != null) data[key] = value;
 	}
-	client.post("/status/bulk-update", { data });
+	client
+		.post("/status/bulk-update", { data })
+		.catch(() =>
+			console.error("Failed to update status, is interface running?"),
+		);
 }
 
 function fetchStatusInfo(bot) {

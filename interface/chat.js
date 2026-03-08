@@ -1,9 +1,13 @@
 import { client } from "./client.js";
 
 function sendMessage(message) {
-	client.post("/message/send", {
-		content: message,
-	});
+	if (message) return;
+
+	client
+		.post("/message/send", { content: message })
+		.catch(() =>
+			console.error("Failed to send a message, is interface running?"),
+		);
 }
 
 function extractTextFromObject(obj) {
