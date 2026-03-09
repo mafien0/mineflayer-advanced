@@ -1,14 +1,4 @@
-import { client } from "./client.js";
-
-function sendMessage(message) {
-	if (!message) return;
-
-	client
-		.post("/message/send", { content: message })
-		.catch(() =>
-			console.error("Failed to send a message, is interface running?"),
-		);
-}
+import { sendMsg } from "./messageService.js";
 
 function extractTextFromObject(obj) {
 	if (typeof obj === "string") return obj;
@@ -73,12 +63,11 @@ export function parseChat(message) {
 			if (bracketedTexts[index]) {
 				displayText = bracketedTexts[index];
 			}
+
 			// If still empty/generic after cleaning, use default
-			if (
-				!displayText ||
-				/^\(?link\)?$/i.test(displayText) ||
-				/^[\[\]()\s]+$/.test(displayText)
-			) {
+			const isGenericLink = /^\(?link\)?$/i.test(displayText);
+			const isOnlyBrackets = /^[[\]()\s]+$/.test(displayText);
+			if (!displayText || isGenericLink || isOnlyBrackets) {
 				displayText = "Link";
 			}
 
@@ -86,5 +75,5 @@ export function parseChat(message) {
 		})
 		.join(" ");
 
-	sendMessage(formatted || fullText);
+	sendMsg(formatted || fullText);
 }
