@@ -1,12 +1,27 @@
 {
-	"bot": {
+	"mineflayer": {
 		"host": "localhost",
 		"port": 25565,
 		"username": "bot",
-		"version": "1.21.11"
+		"version": "1.21.11",
+		"base_reconnect_timeout": "5000",
+		"max_reconnect_attempts": "5"
 	},
-	"base_reconnect_timeout": "5000",
-	"max_reconnect_attempts": "5",
-	"prompt": "> ",
-	"command_prefix": ":"
+
+	"discord": {
+		"channels": {
+			"chat": "1477468782749290556",
+			"status": "1477468796024525036",
+			"updates": "1477468821534277845"
+		},
+		"embed": {
+			"colors": {
+				"white": "#fff4e6",
+				"red": "#e74c3c",
+				"green": "#2ecc71",
+				"yellow": "#ecb939",
+				"gray": "#607d8b"
+			}
+		}
+	}
 }
