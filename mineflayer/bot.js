@@ -1,7 +1,9 @@
 import mineflayer from "mineflayer";
 import { attachListeners } from "./listeners.js";
-import config from "../config.json" with { type: "json" };
 
+import { connectUpdate, reconnectUpdate } from "../discord/updateService.js";
+
+import config from "../config.json" with { type: "json" };
 const mfconfig = config.mineflayer;
 
 const BASE_RECONNECT_TIMEOUT = mfconfig.base_reconnect_timeout || 5000;
@@ -21,6 +23,7 @@ export async function connect() {
 			version: mfconfig.version || "1.21.11",
 		});
 		attachListeners(bot);
+		connectUpdate();
 
 		// reset counters to their default state
 		bot.on("spawn", () => {
@@ -52,14 +55,11 @@ export async function scheduleReconnect() {
 	// Calculate next reconnect delay
 	reconnectDelay = Math.min(reconnectDelay * 2, 60000);
 
-	// TODO: Send to the interface as an update
-	console.log(
+	reconnectUpdate(
 		`Reconnecting in ${delay / 1000} seconds... (attempt ${reconnectAttempts}/${MAX_RECONNECT_ATTEMPTS})`,
 	);
 
 	reconnectTimeout = setTimeout(() => {
-		// TODO: Send to the interface as an update
-		console.log("Reconnecting...");
 		connect();
 	}, delay);
 }

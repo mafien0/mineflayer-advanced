@@ -8,28 +8,22 @@ import {
 
 const sendUpdateMsg = (message) => sendEmbedMsg(message, "updates");
 
-export async function handleUpdates(updateType, info = "") {
-	if (!updateType) throw new Error("No update type provided");
+export const connectUpdate = () => {
+	sendUpdateMsg(createSuccess("Connected", "Succesfully connected"));
+};
 
-	switch (updateType) {
-		case "kick":
-			sendUpdateMsg(createError("Kick", info));
-			break;
+export const kickUpdate = (info) => {
+	sendUpdateMsg(createError("Kick", info));
+};
 
-		case "connect":
-			sendUpdateMsg(createSuccess("Connected", "Succesfully connected"));
-			break;
+export const reconnectUpdate = (info) => {
+	sendUpdateMsg(createWarning("Reconnect", info));
+};
 
-		case "reconnect":
-			sendUpdateMsg(createWarning("Reconnect", info));
-			break;
+export const deathUpdate = (info) => {
+	sendUpdateMsg(createError("Death", info));
+};
 
-		case "death":
-			sendUpdateMsg(createError("Death", info));
-			break;
-
-		case "action":
-			sendUpdateMsg(createMessage("Action", info));
-			break;
-	}
-}
+export const actionUpdate = (info) => {
+	sendUpdateMsg(createMessage("Action", info));
+};
