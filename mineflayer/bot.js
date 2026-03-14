@@ -1,7 +1,7 @@
 import mineflayer from "mineflayer";
 import { attachListeners } from "./listeners.js";
 
-import { connectUpdate, reconnectUpdate } from "../discord/updateService.js";
+import { reconnectUpdate } from "../discord/updateService.js";
 
 import config from "../config.json" with { type: "json" };
 const mfconfig = config.mineflayer;

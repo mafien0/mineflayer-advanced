@@ -26,6 +26,7 @@ export function attachListeners(bot) {
 	});
 
 	bot.on("kicked", (rawReason) => {
+		// Kick messages are really stupid, and return whatever it wants, so we need to check for each case
 		const reason =
 			typeof rawReason === "string" ? JSON.parse(rawReason) : rawReason;
 		console.log(reason);
@@ -56,9 +57,13 @@ export function attachListeners(bot) {
 			banUpdate("Bot got banned");
 			return;
 		}
+		if (value === "multiplayer.disconnect.duplicate_login") {
+			disconnectUpdate(`${bot.username} logged on from another location`);
+			return;
+		}
 
 		// If haven't handled, send raw json
-		disconnectUpdate(reason);
+		disconnectUpdate(JSON.stringify(reason));
 	});
 
 	bot.on("message", (jsonMsg) => {
