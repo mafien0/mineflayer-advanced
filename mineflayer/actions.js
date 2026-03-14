@@ -1,4 +1,5 @@
 import { bot } from "./bot.js";
+import { actionUpdate } from "../discord/updateService.js";
 
 export function stop() {
 	bot.clearControlStates();
@@ -7,6 +8,7 @@ export function stop() {
 }
 
 export function useItem(continuously) {
+	actionUpdate("Using item");
 	bot.activateItem();
 	if (!continuously) {
 		setTimeout(() => bot.deactivateItem(), 3000);
@@ -15,6 +17,7 @@ export function useItem(continuously) {
 }
 
 export function useBlock() {
+	actionUpdate("Using block");
 	const block = bot.blockAtCursor(5);
 	if (!block) return false;
 
@@ -23,6 +26,7 @@ export function useBlock() {
 }
 
 export function attack() {
+	actionUpdate("Started attacking");
 	const entity = bot.entityAtCursor(5);
 	if (!entity) return false;
 	bot.attack(entity);
@@ -30,6 +34,7 @@ export function attack() {
 }
 
 export function dig() {
+	actionUpdate("Started digging");
 	const block = bot.blockAtCursor(5);
 	if (!block) return false;
 	bot.dig(block);
@@ -37,6 +42,7 @@ export function dig() {
 }
 
 export function jump(continuously) {
+	actionUpdate(continuously ? "Jumping continuosly" : "Jumped");
 	bot.setControlState("jump", true);
 	if (!continuously) {
 		setTimeout(() => bot.setControlState("jump", false), 50);
@@ -46,6 +52,9 @@ export function jump(continuously) {
 
 export function move(direction, continuously) {
 	if (!direction) return false;
+	actionUpdate(
+		continuously ? `Moving ${direction} continuously` : `Moving ${direction}`,
+	);
 
 	bot.setControlState(direction, true);
 	if (!continuously) {
@@ -55,6 +64,7 @@ export function move(direction, continuously) {
 }
 
 export function sneak(isSneaking) {
+	actionUpdate(isSneaking ? "Started sneaking" : "Stopped sneaking");
 	bot.setControlState("sneak", isSneaking);
 	return true;
 }
